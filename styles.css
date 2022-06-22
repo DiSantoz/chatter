@@ -1,0 +1,16 @@
+.container{
+    max-width: 6000px;
+}
+
+.btn{
+    background: #116152;
+    color: aliceblue;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.btn:focus{
+    outline: none !important;
+    background-color: aliceblue;
+    color: #116152;
+}
