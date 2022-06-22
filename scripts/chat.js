@@ -7,7 +7,7 @@ class Chatroom {
     this.unsub;
   }
   async addChat(message) {
-    // chat object
+    // format a chat object
     const now = new Date();
     const chat = {
       message: message,
@@ -15,7 +15,7 @@ class Chatroom {
       room: this.room,
       created_at: firebase.firestore.Timestamp.fromDate(now),
     };
-    // save chat documents
+    // save the chat document
     const response = await this.chats.add(chat);
     return response;
   }
@@ -27,37 +27,23 @@ class Chatroom {
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           if (change.type === "added") {
-            // update UI
             callback(change.doc.data());
           }
         });
       });
   }
+
   // updating username
   updateName(username) {
     this.username = username;
   }
+
   // updating room
   updateRoom(room) {
     this.room = room;
-    console.log(`room updated to ${room}`);
+    console.log("room updated");
     if (this.unsub) {
       this.unsub();
     }
   }
 }
-
-const chatroom = new Chatroom("general", "faruq");
-
-chatroom.getChats((data) => {
-  console.log(data);
-});
-
-setTimeout(() => {
-  chatroom.updateRoom("gaming");
-  chatroom.updateName("yosi");
-  chatroom.getChats((data) => {
-    console.log(data);
-  });
-  chatroom.addChat("hello");
-}, 3000);
